@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
+using System;
 using System.IO;
 using TMPro;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
     GameObject[] paddles = new GameObject[3];
     GameObject ball;
+    BallScript ballScript;
 
     public float ballSpeed = 0;
-
+    float defBallSpeed = 9;
     float movement = 7.5f;
 
     float m_distanceTraveled = 0f;
@@ -25,23 +28,30 @@ public class GameManager : MonoBehaviour {
     public int highScore = 0;
 
     public TextMeshPro scoreText;
-
-    string filePath;
+    public TextMeshPro highScoreText;
+    public GameObject playAgainButton;
 
     // Use this for initialization
     void Start() {
 
-        if (File.Exists(filePath + "/HighScore.dat"))
+        playAgainButton.SetActive(false);
+
+        if (File.Exists(Application.persistentDataPath + "/HighScore.dat"))
         {
             Load();
         }
 
         ball = GameObject.Find("Ball");
+        ballScript = ball.GetComponent<BallScript>();
         paddles[0] = GameObject.Find("Paddle1");
         paddles[1] = GameObject.Find("Paddle2");
         paddles[2] = GameObject.Find("Paddle3");
 
         canShoot = true;
+        if (highScore != 0)
+        {
+            highScoreText.text = "High Score: " + highScore;
+        }
     }
 	
 	// Update is called once per frame
@@ -61,9 +71,10 @@ public class GameManager : MonoBehaviour {
 
             if (!scrolling && canShoot)
             {
-                //ball.transform.parent = null;
+                ballScript.connectedPaddleScript = null;
+                ballScript.connectedTo = null;
                 canShoot = false;
-                ballSpeed = 7;
+                ballSpeed = defBallSpeed;
             }
         }
 
@@ -71,9 +82,10 @@ public class GameManager : MonoBehaviour {
         {
             if (!scrolling && canShoot)
             {
-                //ball.transform.parent = null;
+                ballScript.connectedPaddleScript = null;
+                ballScript.connectedTo = null;
                 canShoot = false;
-                ballSpeed = 7;
+                ballSpeed = defBallSpeed;
             }
         }
 
@@ -100,7 +112,6 @@ public class GameManager : MonoBehaviour {
 
     public void Scroll()
     {
-
         paddles[0].transform.Translate(Vector3.down * movement * Time.deltaTime);
         paddles[1].transform.Translate(Vector3.down * movement * Time.deltaTime);
         paddles[2].transform.Translate(Vector3.down * movement * Time.deltaTime);
@@ -114,34 +125,51 @@ public class GameManager : MonoBehaviour {
 
         if(score > highScore)
         {
-            Save(highScore);
+            Save(score);
+            highScore = score;
+            highScoreText.text = "High Score: " + highScore;
         }
+
+        playAgainButton.SetActive(true);
+
+    }
+
+    public void ResetGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void Save(int saveHighScore)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(filePath + "/playerOptions.dat");
+        FileStream file = File.Create(Application.persistentDataPath + "/playerOptions.dat");
 
-        int newHighScore = saveHighScore;
+        PlayerData data = new PlayerData();
+        data.highScore = saveHighScore;
         //send.theQuotes = quotes;
 
-        bf.Serialize(file, newHighScore);
+        bf.Serialize(file, data);
         file.Close();
     }
 
     public void Load()
     {
-        if (File.Exists(filePath + "/HighScore.dat"))
+        if (File.Exists(Application.persistentDataPath + "/HighScore.dat"))
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(filePath + "/HighScore.dat", FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + "/HighScore.dat", FileMode.Open);
 
-            int pulledHighScore = (int)bf.Deserialize(file);
+            PlayerData data = (PlayerData)bf.Deserialize(file);
             //LoggedQuotes pulled = (LoggedQuotes)bf.Deserialize(file);
             file.Close();
 
-            highScore = pulledHighScore;
+            highScore = data.highScore;
         }
+    }
+
+    [Serializable]
+    class PlayerData
+    {
+        public int highScore = 0;
     }
 }

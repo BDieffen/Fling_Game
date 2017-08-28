@@ -7,6 +7,7 @@ public class BallScript : MonoBehaviour {
     GameManager gameManager;
 
     public GameObject connectedTo;
+    public PaddleScript connectedPaddleScript;
 
     Vector3 offset;
     bool firstShot = true;
@@ -19,22 +20,22 @@ public class BallScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        offset = new Vector3(connectedTo.transform.position.x + transform.position.x, connectedTo.transform.position.y + .2f, connectedTo.transform.position.z + transform.position.z);
+        //offset = new Vector3(connectedTo.transform.position.x + transform.position.x, connectedTo.transform.position.y + .2f, connectedTo.transform.position.z + transform.position.z);
 
 
-        if (gameManager.canShoot && !firstShot)
+        if (!firstShot && connectedPaddleScript != null)
         {
             //transform.position = offset;
-            transform.position = new Vector3(connectedTo.transform.position.x + transform.position.x, connectedTo.transform.position.y + .2f, connectedTo.transform.position.z + transform.position.z);
+            transform.Translate(connectedPaddleScript.direction * connectedPaddleScript.speed * Time.deltaTime);
         }
 		
 	}
 
-    public void OnBecameInvisible()
+    /*public void OnBecameInvisible()
     {
         gameManager.GameOver();
         Destroy(gameObject);
-    }
+    }*/
 
     private void OnTriggerEnter(Collider col)
     {
@@ -54,6 +55,7 @@ public class BallScript : MonoBehaviour {
         if(other.gameObject.tag == "Paddle")
         {
             connectedTo = other.gameObject;
+            connectedPaddleScript = connectedTo.GetComponent<PaddleScript>();
             gameManager.canShoot = false;
             gameManager.score++;
             gameManager.scoreText.text = gameManager.score.ToString();
