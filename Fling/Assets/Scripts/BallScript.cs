@@ -56,11 +56,7 @@ public class BallScript : MonoBehaviour {
         {
             connectedTo = other.gameObject;
             connectedPaddleScript = connectedTo.GetComponent<PaddleScript>();
-            gameManager.canShoot = false;
-            gameManager.score++;
-            gameManager.scoreText.text = gameManager.score.ToString();
-            gameManager.ballSpeed = 0;
-            gameManager.scrolling = true;
+            gameManager.ApplyScore();
             transform.position = new Vector3(transform.position.x, connectedTo.transform.position.y + .2f, transform.position.z);
             offset = new Vector3(connectedTo.transform.position.x + transform.position.x, connectedTo.transform.position.y + .2f, connectedTo.transform.position.z + transform.position.z);
             firstShot = false;

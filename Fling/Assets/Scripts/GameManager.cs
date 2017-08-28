@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
-using System;
 using System.IO;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -10,6 +9,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
 
     GameObject[] paddles = new GameObject[3];
+    PaddleScript[] pScripts = new PaddleScript[3];
     GameObject ball;
     BallScript ballScript;
 
@@ -46,6 +46,9 @@ public class GameManager : MonoBehaviour {
         paddles[0] = GameObject.Find("Paddle1");
         paddles[1] = GameObject.Find("Paddle2");
         paddles[2] = GameObject.Find("Paddle3");
+        pScripts[0] = paddles[0].GetComponent<PaddleScript>();
+        pScripts[1] = paddles[1].GetComponent<PaddleScript>();
+        pScripts[2] = paddles[2].GetComponent<PaddleScript>();
 
         canShoot = true;
         if (highScore != 0)
@@ -82,6 +85,7 @@ public class GameManager : MonoBehaviour {
         {
             if (!scrolling && canShoot)
             {
+                ballScript.connectedPaddleScript.wasLastPaddle = true;
                 ballScript.connectedPaddleScript = null;
                 ballScript.connectedTo = null;
                 canShoot = false;
@@ -106,6 +110,14 @@ public class GameManager : MonoBehaviour {
                 scrolling = false;
                 m_distanceTraveled = 0;
                 canShoot = true;
+                //Make the wasLastPaddle object teleport using PaddleScript.TeleportPaddle() method
+                /*for(int i=0;i<paddles.Length; i++)
+                {
+                    if (paddles[i].GetComponent<PaddleScript>().wasLastPaddle)
+                    {
+                        paddles[i].GetComponent<PaddleScript>().TeleportPaddle();
+                    }
+                }*/
             }
         }
     }
@@ -116,6 +128,18 @@ public class GameManager : MonoBehaviour {
         paddles[1].transform.Translate(Vector3.down * movement * Time.deltaTime);
         paddles[2].transform.Translate(Vector3.down * movement * Time.deltaTime);
         ball.transform.Translate(Vector3.down * movement * Time.deltaTime);
+    }
+
+    public void ApplyScore()
+    {
+        score++;
+        canShoot = false;
+        scoreText.text = score.ToString();
+        ballSpeed = 0;
+        scrolling = true;
+        pScripts[0].DifficultyIncrease(score);
+        pScripts[1].DifficultyIncrease(score);
+        pScripts[2].DifficultyIncrease(score);
     }
 
     public void GameOver()
@@ -142,7 +166,7 @@ public class GameManager : MonoBehaviour {
     public void Save(int saveHighScore)
     {
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/playerOptions.dat");
+        FileStream file = File.Create(Application.persistentDataPath + "/HighScore.dat");
 
         PlayerData data = new PlayerData();
         data.highScore = saveHighScore;
@@ -167,8 +191,8 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    [Serializable]
-    class PlayerData
+    [System.Serializable]
+    public class PlayerData
     {
         public int highScore = 0;
     }
