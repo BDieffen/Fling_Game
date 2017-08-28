@@ -13,33 +13,33 @@ public class PaddleScript : MonoBehaviour {
     public float currentMaxSize = 2.5f;
     float currentSize = 2.5f;
     public Vector3 direction;
-    //float paddleSize;
-    public GameObject teleEntrance;
     public GameObject teleExit;
     GameManager gameScript;
-    Vector3 pos;
     public bool wasLastPaddle = false;
 
-    // Use this for initialization
     void Start () {
         gameScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        //When the game starts, this starts moving the 3rd paddle (the first one offscreen)
         if (gameObject.name == "Paddle3")
         {
             RandomizeSpeed();
         }
 	}
 	
-	// Update is called once per frame
 	void Update () {
-        transform.Translate(direction * speed * Time.deltaTime);
-        pos = Camera.main.ViewportToWorldPoint(transform.position);
 
+        //Moves the paddle in the correct direction with the randomly determined speed
+        transform.Translate(direction * speed * Time.deltaTime);
+
+        //Once the paddle gets to the lowest point offscreen, it triggers TeleportPaddle, moving it to above the screen and randomizing speed and size
         if(transform.position.y <= -10)
         {
             TeleportPaddle();
         }
     }
 
+    //Teleports the paddle to above the screen and randomizes its speed and, if the score is 8 or higher, randomizes its size
     public void TeleportPaddle()
     {
         wasLastPaddle = false;
@@ -51,32 +51,18 @@ public class PaddleScript : MonoBehaviour {
         }
     }
 
+    //"Bounces" the paddle to the right or left when it collides with the right or left bounds of the screen (using collider triggers right now)
+    //Still need to change this so it bounces off the actual edge of the screen
     private void OnTriggerEnter(Collider other)
     {
-        /*if(other.gameObject.name == teleEntrance.gameObject.name)
-        {
-            transform.position = teleExit.transform.position;
-            RandomizeSpeed(gameScript.score);
-            if(gameScript.score >= 5)
-            {
-                RandomizeSize(gameScript.score);
-            }
-        }*/
-
         if (other.gameObject.name == "BoundRight" || other.gameObject.name == "BoundLeft")
         {
             direction = -direction;
         }
-        /*else if (other.gameObject.name == "BoundLeft")
-        {
-            direction = -direction;
-        }*/
-        /*else if (pos.x < 0 || pos.x > 1)
-        {
-            direction = -direction;
-        }*/
     }
 
+    //Randomizes the paddle's speed based on the current capable minimun and maximum speed levels
+    //Also randomizes the starting direction of the paddle
     void RandomizeSpeed()
     {
         float startDir = Random.Range(-1, 1);
@@ -86,12 +72,15 @@ public class PaddleScript : MonoBehaviour {
         }else direction = new Vector3(-1, 0, 0);
     }
 
+    //Randomizes the paddle's size based on the current capable minimun and maximum sizes
     void RandomizeSize()
     {
         currentSize = Random.Range(currentMinSize, currentMaxSize);
         transform.localScale = new Vector3(currentSize, transform.localScale.y, transform.localScale.z);
     }
 
+    //Triggers whenever the score increases
+    //changes the minimum and maximum capable values of the size and speed of paddles once certain score thresholds are met
     public void DifficultyIncrease(int tier)
     {
         switch (tier)
