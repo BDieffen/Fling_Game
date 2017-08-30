@@ -6,7 +6,7 @@ public class PaddleScript : MonoBehaviour {
 
     public float speed = 0f;
     public float currentMinSpeed = 1;
-    public float currentMaxSpeed = 3;
+    public float currentMaxSpeed = 1.5f;
     float minSize = .9f;
     public float currentMinSize = 1.8f;
     float maxSize = 2.5f;
@@ -85,14 +85,14 @@ public class PaddleScript : MonoBehaviour {
     {
         switch (tier)
         {
-            case 5:
+            /*case 5:
                 currentMinSpeed++;
                 break;
             case 10:
                 currentMaxSpeed++;
-                break;
+                break;*/
             case 15:
-                currentMinSpeed++;
+                //currentMinSpeed++;
                 currentMinSize--;
                 break;
             case 20:
@@ -100,6 +100,19 @@ public class PaddleScript : MonoBehaviour {
                 break;
             default:
                 break;
+        }
+        if(tier % 10 == 0)
+        {
+            currentMaxSpeed++;
+        }
+        else if(tier % 15 == 0)
+        {
+            currentMinSpeed++;
+            currentMinSize--;
+        }
+        else if(tier % 20 == 0)
+        {
+            currentMaxSize -= 1.5f;
         }
     }
 }
