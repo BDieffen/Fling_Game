@@ -7,9 +7,9 @@ public class PaddleScript : MonoBehaviour {
     public float speed = 0f;
     public float currentMinSpeed = 1;
     public float currentMaxSpeed = 1.5f;
-    float minSize = .9f;
+    //float minSize = .9f;
     public float currentMinSize = 1.8f;
-    float maxSize = 2.5f;
+    //float maxSize = 2.5f;
     public float currentMaxSize = 2.5f;
     float currentSize = 2.5f;
     public Vector3 direction;

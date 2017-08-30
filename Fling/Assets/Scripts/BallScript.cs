@@ -7,7 +7,6 @@ public class BallScript : MonoBehaviour {
     GameManager gameManager;
     public GameObject connectedTo;
     public PaddleScript connectedPaddleScript;
-    Vector3 offset;
     bool firstShot = true;
 
 	void Start () {
@@ -46,7 +45,6 @@ public class BallScript : MonoBehaviour {
             connectedPaddleScript = connectedTo.GetComponent<PaddleScript>();
             gameManager.ApplyScore();
             transform.position = new Vector3(transform.position.x, connectedTo.transform.position.y + .2f, transform.position.z);
-            offset = new Vector3(connectedTo.transform.position.x + transform.position.x, connectedTo.transform.position.y + .2f, connectedTo.transform.position.z + transform.position.z);
             firstShot = false;
         }
     }

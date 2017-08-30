@@ -109,9 +109,9 @@ public class GameManager : MonoBehaviour {
             if (m_distanceTraveled < 7.5f)
             {
                 //Uses oldPosition in m_distanceTraveled to determine the amount of distance that has been traveled during the scrolling
-                Vector3 oldPosition = ball.transform.position;
+                Vector3 oldPosition = ballScript.connectedTo.transform.position;
                 Scroll();
-                m_distanceTraveled += Vector3.Distance(oldPosition, ball.transform.position);
+                m_distanceTraveled += Vector3.Distance(oldPosition, ballScript.connectedTo.transform.position);
             }else
             {
                 scrolling = false;
