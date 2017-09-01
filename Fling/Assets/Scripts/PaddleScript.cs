@@ -105,12 +105,12 @@ public class PaddleScript : MonoBehaviour {
         {
             currentMaxSpeed++;
         }
-        else if(tier % 15 == 0)
+        if(tier % 15 == 0)
         {
             currentMinSpeed++;
             currentMinSize--;
         }
-        else if(tier % 20 == 0)
+        if(tier % 20 == 0)
         {
             currentMaxSize -= 1.5f;
         }
