@@ -775,7 +775,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: cd8ac37db275bfd41bbd2bd5f121c42c, type: 2}
   - {fileID: 2100000, guid: ef6ca3b04deb45548a6be75cbe48ad79, type: 2}
   ballSelectSpot: 0
-  selectedBall: {fileID: 0}
   paddleMats:
   - {fileID: 2100000, guid: 688915c25e6788a44b621608ccf5555a, type: 2}
   - {fileID: 2100000, guid: aefc9574246d22c43a466578f65f2f98, type: 2}
@@ -786,15 +785,12 @@ MonoBehaviour:
   - {fileID: 2100000, guid: cd8ac37db275bfd41bbd2bd5f121c42c, type: 2}
   - {fileID: 2100000, guid: ef6ca3b04deb45548a6be75cbe48ad79, type: 2}
   paddleSelectSpot: 0
-  selectedPaddle: {fileID: 0}
   backgroundImages:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  ball: {fileID: 1934668856}
-  paddle: {fileID: 1032776098}
 --- !u!4 &417302659
 Transform:
   m_ObjectHideFlags: 0
@@ -1824,6 +1820,7 @@ GameObject:
   - component: {fileID: 1127799153}
   - component: {fileID: 1127799155}
   - component: {fileID: 1127799154}
+  - component: {fileID: 1127799156}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -1882,6 +1879,58 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1127799152}
+--- !u!114 &1127799156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1127799152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1127799154}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 417302658}
+        m_MethodName: BackAndSave
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1149231983
 GameObject:
   m_ObjectHideFlags: 0

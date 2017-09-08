@@ -169,6 +169,12 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    //Loads the options scene when player presses the options button.
+    public void LoadOptions()
+    {
+        SceneManager.LoadScene("Options_Menu");
+    }
+
     //Triggers when the player gets a new high score. Saves the high score into a file which can be retreived later
     public void Save(int saveHighScore)
     {
