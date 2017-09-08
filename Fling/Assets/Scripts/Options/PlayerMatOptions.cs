@@ -11,22 +11,48 @@ public class PlayerMatOptions : MonoBehaviour
 {
 
     public Material[] ballMats = new Material[8];
-    public int ballSelectSpot;
+    public int ballSelectSpot = 0;
     public Material selectedBall;
     public Material[] paddleMats = new Material[8];
-    public int paddleSelectSpot;
+    public int paddleSelectSpot = 0;
     public Material selectedPaddle;
     public Image[] backgroundImages = new Image[5];
 
+    public GameObject ball;
+    public GameObject paddle;
+
     void Start()
     {
-
+        if (File.Exists(Application.persistentDataPath + "/playerOptions.dat"))
+        {
+            Load();
+        }
 
     }
 
     void Update()
     {
 
+    }
+
+    public void BallRight()
+    {
+        scrollRight(ballMats);
+    }
+
+    public void BallLeft()
+    {
+        scrollLeft(ballMats);
+    }
+
+    public void PaddleRight()
+    {
+        scrollRight(paddleMats);
+    }
+
+    public void PaddleLeft()
+    {
+        scrollLeft(paddleMats);
     }
 
     public void scrollRight(Material[] array)
@@ -42,6 +68,7 @@ public class PlayerMatOptions : MonoBehaviour
                 ballSelectSpot++;
             }
             selectedBall = ballMats[ballSelectSpot];
+            ball.GetComponent<MeshRenderer>().material = selectedBall;
         }
         else if (array == paddleMats)
         {
@@ -54,6 +81,7 @@ public class PlayerMatOptions : MonoBehaviour
                 paddleSelectSpot++;
             }
             selectedPaddle = paddleMats[paddleSelectSpot];
+            paddle.GetComponent<MeshRenderer>().material = selectedPaddle;
         }
     }
 
@@ -70,6 +98,7 @@ public class PlayerMatOptions : MonoBehaviour
                 ballSelectSpot--;
             }
             selectedBall = ballMats[ballSelectSpot];
+            ball.GetComponent<MeshRenderer>().material = selectedBall;
         }
         else if (array == paddleMats)
         {
@@ -82,6 +111,23 @@ public class PlayerMatOptions : MonoBehaviour
                 paddleSelectSpot--;
             }
             selectedPaddle = paddleMats[paddleSelectSpot];
+            paddle.GetComponent<MeshRenderer>().material = selectedPaddle;
         }
+    }
+
+    private void Load()
+    {
+        
+    }
+
+    public void BackAndSave()
+    {
+        SceneManager.LoadScene("Game_Scene");
+    }
+
+    [System.Serializable]
+    public class PlayerOptions
+    {
+        
     }
 }
