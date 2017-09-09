@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour {
     public TextMeshPro scoreText;
     public TextMeshPro highScoreText;
     public GameObject playAgainButton;
+    public GameObject goToOptions;
 
     void Start() {
         playAgainButton.SetActive(false);
@@ -49,6 +50,8 @@ public class GameManager : MonoBehaviour {
         pScripts[1] = paddles[1].GetComponent<PaddleScript>();
         pScripts[2] = paddles[2].GetComponent<PaddleScript>();
 
+        goToOptions = GameObject.Find("GoToOptions");
+
         canShoot = true;
         //Displays the high score if one exists
         if (highScore != 0)
@@ -56,8 +59,8 @@ public class GameManager : MonoBehaviour {
             highScoreText.text = "High Score: " + highScore;
         }
     }
-	
-	void Update () {
+
+    void Update() {
         //Number of touches detected each frame
         int nbTouches = Input.touchCount;
 
@@ -66,12 +69,29 @@ public class GameManager : MonoBehaviour {
         {
             print(nbTouches + " touch(es) detected");
 
+            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                CheckTouch(Input.GetTouch(0).position);
+            }
+            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
             //Cycles through all the touches and displays the position of the touch on the screen
             /*for (int i = 0; i < nbTouches; i++)
             {
                 Touch touch = Input.GetTouch(i);
 
                 print("Touch index " + touch.fingerId + " detected at position " + touch.position);
+                //print("Touch index " + touch.fingerId + " detected at position " + touch.position);
+            }*/
+
+            /*Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit hit = new RaycastHit();
+            //moving = Physics.Raycast(ray, out hit);
+            if (hit.collider.gameObject.name == "GoToOptions")
+            {
+                //Debug.Log("Touch Detected on : " + go.name);
+                LoadOptions();
             }*/
 
             //When the screen is touched and the ball can be shot and the paddles are done scrolling, shoots the ball upward
@@ -83,8 +103,7 @@ public class GameManager : MonoBehaviour {
                 ballSpeed = defBallSpeed;
             }
         }
-
-        //Shoots the ball forward by clicking left mouse button. USED FOR COMPUTER TESTING
+            //Shoots the ball forward by clicking left mouse button. USED FOR COMPUTER TESTING
         if (Input.GetButtonDown("Fire1"))
         {
             if (!scrolling && canShoot)
@@ -120,6 +139,25 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
+
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    public void CheckTouch(Vector2 pos)
+    {
+        Vector3 wp = Camera.main.ScreenToWorldPoint(pos);
+        Vector2 touchPos = new Vector2(wp.x, wp.y);
+        var hit = Physics2D.OverlapPoint(touchPos);
+
+        if (hit)
+        {
+            //Debug.Log(hit.transform.gameObject.name);
+            //hit.transform.gameObject.SendMessage('Clicked', 0, SendMessageOptions.DontRequireReceiver);
+            if (hit.transform.gameObject.name == "GoToOptions")
+            {
+                LoadOptions();
+            }
+        }
+    }
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     //Handles the scrolling of the ball and paddles
     public void Scroll()
