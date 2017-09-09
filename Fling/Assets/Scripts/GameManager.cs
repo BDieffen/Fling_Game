@@ -69,52 +69,41 @@ public class GameManager : MonoBehaviour {
         {
             print(nbTouches + " touch(es) detected");
 
-            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 CheckTouch(Input.GetTouch(0).position);
             }
-            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-            //Cycles through all the touches and displays the position of the touch on the screen
-            /*for (int i = 0; i < nbTouches; i++)
+            if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
-                Touch touch = Input.GetTouch(i);
+                TouchEnd(Input.GetTouch(0).position);
+            }
 
-                print("Touch index " + touch.fingerId + " detected at position " + touch.position);
-                //print("Touch index " + touch.fingerId + " detected at position " + touch.position);
-            }*/
 
-            /*Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-            RaycastHit hit = new RaycastHit();
-            //moving = Physics.Raycast(ray, out hit);
-            if (hit.collider.gameObject.name == "GoToOptions")
-            {
-                //Debug.Log("Touch Detected on : " + go.name);
-                LoadOptions();
-            }*/
 
             //When the screen is touched and the ball can be shot and the paddles are done scrolling, shoots the ball upward
-            if (!scrolling && canShoot)
+            /*if (!scrolling && canShoot)
             {
                 ballScript.connectedPaddleScript = null;
                 ballScript.connectedTo = null;
                 canShoot = false;
                 ballSpeed = defBallSpeed;
-            }
+            }*/
+
+
+
         }
             //Shoots the ball forward by clicking left mouse button. USED FOR COMPUTER TESTING
-        if (Input.GetButtonDown("Fire1"))
-        {
-            if (!scrolling && canShoot)
+            /*if (Input.GetButtonDown("Fire1"))
             {
-                ballScript.connectedPaddleScript.wasLastPaddle = true;
-                ballScript.connectedPaddleScript = null;
-                ballScript.connectedTo = null;
-                canShoot = false;
-                ballSpeed = defBallSpeed;
-            }
-        }
+                if (!scrolling && canShoot)
+                {
+                    ballScript.connectedPaddleScript.wasLastPaddle = true;
+                    ballScript.connectedPaddleScript = null;
+                    ballScript.connectedTo = null;
+                    canShoot = false;
+                    ballSpeed = defBallSpeed;
+                }
+            }*/
 
         //Stops moving the ball if it doesn't exist. USED TO PREVENT ERRORS
         if (ball != null)
@@ -140,7 +129,6 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     public void CheckTouch(Vector2 pos)
     {
         Vector3 wp = Camera.main.ScreenToWorldPoint(pos);
@@ -149,15 +137,35 @@ public class GameManager : MonoBehaviour {
 
         if (hit)
         {
-            //Debug.Log(hit.transform.gameObject.name);
-            //hit.transform.gameObject.SendMessage('Clicked', 0, SendMessageOptions.DontRequireReceiver);
             if (hit.transform.gameObject.name == "GoToOptions")
             {
                 LoadOptions();
             }
         }
+        else
+        {
+            //When the screen is touched and the ball can be shot and the paddles are done scrolling, shoots the ball upward
+            if (!scrolling && canShoot)
+            {
+                ballScript.connectedPaddleScript = null;
+                ballScript.connectedTo = null;
+                canShoot = false;
+                ballSpeed = defBallSpeed;
+            }
+        }
     }
-        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    void TouchEnd(Vector2 pos)
+    {
+        Vector3 wp = Camera.main.ScreenToWorldPoint(pos);
+        Vector2 touchPos = new Vector2(wp.x, wp.y);
+        var hit = Physics2D.OverlapPoint(touchPos);
+
+        if (hit.transform.gameObject.name == "GoToOptions")
+        {
+            LoadOptions();
+        }
+    }
 
     //Handles the scrolling of the ball and paddles
     public void Scroll()

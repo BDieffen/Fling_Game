@@ -24,10 +24,13 @@ public class OptionSelects : MonoBehaviour {
         {
             print(nbTouches + " touch(es) detected");
 
-            //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 CheckTouch(Input.GetTouch(0).position);
+            }
+            if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                TouchEnd(Input.GetTouch(0).position);
             }
 
         }
@@ -41,8 +44,6 @@ public class OptionSelects : MonoBehaviour {
 
         if (hit)
         {
-            //Debug.Log(hit.transform.gameObject.name);
-            //hit.transform.gameObject.SendMessage('Clicked', 0, SendMessageOptions.DontRequireReceiver);
             if (hit.transform.gameObject.name == "BallRight")
             {
                 matOptions.BallRight();
@@ -59,11 +60,19 @@ public class OptionSelects : MonoBehaviour {
             {
                 matOptions.PaddleLeft();
             }
-            else if (hit.transform.gameObject.name == "BackButton")
-            {
-                matOptions.BackAndSave();
-            }
             else return;
+        }
+    }
+
+    void TouchEnd(Vector2 pos)
+    {
+        Vector3 wp = Camera.main.ScreenToWorldPoint(pos);
+        Vector2 touchPos = new Vector2(wp.x, wp.y);
+        var hit = Physics2D.OverlapPoint(touchPos);
+
+        if (hit.transform.gameObject.name == "BackButton")
+        {
+            matOptions.BackAndSave();
         }
     }
 
