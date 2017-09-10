@@ -9,6 +9,7 @@ public class OptionSelects : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        Resources.UnloadUnusedAssets();
         matOptions = optionsManager.GetComponent<PlayerMatOptions>();
 		
 	}

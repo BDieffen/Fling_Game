@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour {
     public GameObject goToOptions;
 
     void Start() {
+        Resources.UnloadUnusedAssets();
         playAgainButton.SetActive(false);
 
         //Loads the user's high score if one exists
@@ -114,16 +115,16 @@ public class GameManager : MonoBehaviour {
         //Continues the scrolling of paddles until the distance of 7.5 units has been scrolled and then stops all scrolling movement
         if (scrolling)
         {
-            if (m_distanceTraveled < 7.5f)
+            if(ballScript.connectedTo.transform.position.y > -2.5)//if (m_distanceTraveled < 7.5f)
             {
                 //Uses oldPosition in m_distanceTraveled to determine the amount of distance that has been traveled during the scrolling
-                Vector3 oldPosition = ballScript.connectedTo.transform.position;
+                //Vector3 oldPosition = ballScript.connectedTo.transform.position;
                 Scroll();
-                m_distanceTraveled += Vector3.Distance(oldPosition, ballScript.connectedTo.transform.position);
+                //m_distanceTraveled += Vector3.Distance(oldPosition, ballScript.connectedTo.transform.position);
             }else
             {
                 scrolling = false;
-                m_distanceTraveled = 0;
+                //m_distanceTraveled = 0;
                 canShoot = true;
             }
         }

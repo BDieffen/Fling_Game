@@ -93,10 +93,10 @@ public class PaddleScript : MonoBehaviour {
                 break;*/
             case 15:
                 //currentMinSpeed++;
-                currentMinSize--;
+                currentMinSize -= .5f;
                 break;
             case 20:
-                currentMaxSize--;
+                currentMaxSize -=.5f;
                 break;
             default:
                 break;
