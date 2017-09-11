@@ -68,8 +68,6 @@ public class GameManager : MonoBehaviour {
         //Do something if there is at least 1 touch detected
         if (nbTouches > 0)
         {
-            print(nbTouches + " touch(es) detected");
-
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 CheckTouch(Input.GetTouch(0).position);
