@@ -58,8 +58,8 @@ public class SplashScreen : MonoBehaviour
         }
         if(startFadeOut && alpha == 1)
         {
-            Resources.UnloadUnusedAssets();
-            SceneManager.LoadScene("StartMenu");
+            //Change back to StartMenu
+            SceneManager.LoadScene("Game_Scene");
         }
     }
 
@@ -72,8 +72,8 @@ public class SplashScreen : MonoBehaviour
 
     void TouchEnd(Vector2 pos)
     {
-        Resources.UnloadUnusedAssets();
-        SceneManager.LoadScene("StartMenu");
+        //Change back to StartMenu
+        SceneManager.LoadScene("Game_Scene");
     }
 
 }
