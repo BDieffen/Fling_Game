@@ -31,7 +31,13 @@ public class SplashScreen : MonoBehaviour
         return (fadeSpeed);
     }
 
-    void OnLevelWasLoaded(int level)
+    /*void OnLevelWasLoaded(int level)
+    {
+        alpha = 1;
+        BeginFade(-1);
+    }*/
+
+    void OnSceneLoaded()
     {
         alpha = 1;
         BeginFade(-1);
@@ -58,8 +64,8 @@ public class SplashScreen : MonoBehaviour
         }
         if(startFadeOut && alpha == 1)
         {
-            //Change back to StartMenu
-            SceneManager.LoadScene("Game_Scene");
+            SceneManager.LoadScene("StartMenu");
+            //SceneManager.LoadScene("Game_Scene");
         }
     }
 
@@ -72,8 +78,8 @@ public class SplashScreen : MonoBehaviour
 
     void TouchEnd(Vector2 pos)
     {
-        //Change back to StartMenu
-        SceneManager.LoadScene("Game_Scene");
+        SceneManager.LoadScene("StartMenu");
+        //SceneManager.LoadScene("Game_Scene");
     }
 
 }

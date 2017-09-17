@@ -107,7 +107,11 @@ public class GameManager : MonoBehaviour {
         //Stops moving the ball if it doesn't exist. USED TO PREVENT ERRORS
         if (ball != null)
         {
-            ball.transform.Translate(Vector3.up * ballSpeed * Time.deltaTime);
+            //JUST ADDED TO TEST PERFORMANCE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (!canShoot)
+            {
+                ball.transform.Translate(Vector3.up * ballSpeed * Time.deltaTime);
+            }
         }
 
         //Continues the scrolling of paddles until the distance of 7.5 units has been scrolled and then stops all scrolling movement

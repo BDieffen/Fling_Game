@@ -83,24 +83,6 @@ public class PaddleScript : MonoBehaviour {
     //changes the minimum and maximum capable values of the size and speed of paddles once certain score thresholds are met
     public void DifficultyIncrease(int tier)
     {
-        switch (tier)
-        {
-            /*case 5:
-                currentMinSpeed++;
-                break;
-            case 10:
-                currentMaxSpeed++;
-                break;*/
-            case 15:
-                //currentMinSpeed++;
-                currentMinSize -= .5f;
-                break;
-            case 20:
-                currentMaxSize -=.5f;
-                break;
-            default:
-                break;
-        }
         if(tier % 10 == 0)
         {
             currentMaxSpeed++;
@@ -112,7 +94,7 @@ public class PaddleScript : MonoBehaviour {
         }
         if(tier % 20 == 0)
         {
-            currentMaxSize -= 1.5f;
+            currentMaxSize -= 1f;
         }
     }
 }
