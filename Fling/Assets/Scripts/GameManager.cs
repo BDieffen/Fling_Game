@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
 
     public float ballSpeed = 0;
     float defBallSpeed = 9;
-    float movement = 7.5f;
+    public float movement = 7.5f;
 
     float m_distanceTraveled = 0f;
 
@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour {
         //Stops moving the ball if it doesn't exist. USED TO PREVENT ERRORS
         if (ball != null)
         {
-            //JUST ADDED TO TEST PERFORMANCE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //Only applies movement to the ball if the player has shot the ball
             if (!canShoot)
             {
                 ball.transform.Translate(Vector3.up * ballSpeed * Time.deltaTime);

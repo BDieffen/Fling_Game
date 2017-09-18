@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Paddle
   - KillZone
+  - Obstacle
+  - PowerUp
   layers:
   - Default
   - TransparentFX
