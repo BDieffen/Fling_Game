@@ -24,14 +24,39 @@ public class BallScript : MonoBehaviour {
     //Triggers when it hits the Game Over threshold. There are two since it didn't always trigger with the first one
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "KillZone")
+        /*if (col.gameObject.tag == "KillZone")
         {
             gameManager.GameOver();
-        }
+        }*/
         if (col.gameObject.name == "BallDestroy")
         {
-            gameManager.GameOver();
-            Destroy(gameObject);
+            gameManager.lives--;
+            if (gameManager.lives > 0)
+            {
+                transform.position = new Vector3(connectedTo.transform.position.x, connectedTo.transform.position.y + .2f, transform.position.z);
+            }
+            //gameManager.GameOver();
+            //Destroy(gameObject);
+        }
+        else if (col.gameObject.tag == "Obstacle")
+        {
+            gameManager.lives--;
+            if(gameManager.lives > 0)
+            {
+                transform.position = new Vector3(connectedTo.transform.position.x, connectedTo.transform.position.y + .2f, transform.position.z);
+            }
+        }
+        else if(col.gameObject.tag == "PowerUp")
+        {
+            if(col.gameObject.name == "ExtraLife")
+            {
+                gameManager.lives++;
+                Destroy(col.gameObject);
+            }
+            else if(col.gameObject.name == "LargerPaddlePower")
+            {
+                Destroy(col.gameObject);
+            }
         }
     }
 

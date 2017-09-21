@@ -18,10 +18,31 @@ public class SpawnableObjects : MonoBehaviour {
         {
             ScrollObj();
         }
+        if(transform.position.y <= -4.5)
+        {
+            Destroy(gameObject);
+        }
 	}
 
     void ScrollObj()
     {
         transform.Translate(Vector3.down * gameManagerScript.movement * Time.deltaTime);
+    }
+
+    /*private void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.tag == "Obstacle")
+        {
+            gameManagerScript.lives--;
+        }
+        else if(col.gameObject.tag == "PowerUp")
+        {
+
+        }
+    }*/
+
+    public void ApplyPower()
+    {
+
     }
 }

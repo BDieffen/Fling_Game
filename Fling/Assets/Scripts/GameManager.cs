@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour {
 
     public int highScore = 0;
 
+    public int lives = 1;
+
     public TextMeshPro scoreText;
     public TextMeshPro highScoreText;
     public GameObject playAgainButton;
@@ -62,11 +64,17 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update() {
+        //If lives is equal to or less than 0 then activate game over
+        if(lives <= 0)
+        {
+            GameOver();
+        }
+
         //Number of touches detected each frame
         int nbTouches = Input.touchCount;
 
         //Do something if there is at least 1 touch detected
-        if (nbTouches > 0)
+        if (nbTouches > 0 && !scrolling)
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
