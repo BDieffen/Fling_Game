@@ -32,8 +32,8 @@ QualitySettings:
     asyncUploadTimeSlice: 2
     asyncUploadBufferSize: 4
     excludedTargetPlatforms:
-    - Standalone
     - Android
+    - Standalone
   - serializedVersion: 2
     name: Fast
     pixelLightCount: 0

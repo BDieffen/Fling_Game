@@ -5,8 +5,17 @@ using System.IO;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
+    //These are for framerate testing
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    /*public TextMeshPro framerate;
+    int m_frameCounter = 0;
+    float m_timeCounter = 0.0f;
+    float m_lastFramerate = 0.0f;
+    public float m_refreshTime = 0.5f;*/
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     GameObject[] paddles = new GameObject[3];
     PaddleScript[] pScripts = new PaddleScript[3];
@@ -64,8 +73,26 @@ public class GameManager : MonoBehaviour {
     }
 
     void Update() {
+        //This section displays current framerate. Use this for optimization testing
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        /*if (m_timeCounter < m_refreshTime)
+        {
+            m_timeCounter += Time.deltaTime;
+            m_frameCounter++;
+        }
+        else
+        {
+            //This code will break if you set your m_refreshTime to 0, which makes no sense.
+            m_lastFramerate = (float)m_frameCounter / m_timeCounter;
+            m_frameCounter = 0;
+            m_timeCounter = 0.0f;
+        }
+
+        framerate.text = m_lastFramerate.ToString();*/
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
         //If lives is equal to or less than 0 then activate game over
-        if(lives <= 0)
+        if (lives <= 0)
         {
             GameOver();
         }
@@ -95,22 +122,19 @@ public class GameManager : MonoBehaviour {
                 canShoot = false;
                 ballSpeed = defBallSpeed;
             }*/
-
-
-
         }
-            //Shoots the ball forward by clicking left mouse button. USED FOR COMPUTER TESTING
-            /*if (Input.GetButtonDown("Fire1"))
+        //Shoots the ball forward by clicking left mouse button. USED FOR COMPUTER TESTING
+        /*if (Input.GetButtonDown("Fire1"))
+        {
+            if (!scrolling && canShoot)
             {
-                if (!scrolling && canShoot)
-                {
-                    ballScript.connectedPaddleScript.wasLastPaddle = true;
-                    ballScript.connectedPaddleScript = null;
-                    ballScript.connectedTo = null;
-                    canShoot = false;
-                    ballSpeed = defBallSpeed;
-                }
-            }*/
+                ballScript.connectedPaddleScript.wasLastPaddle = true;
+                ballScript.connectedPaddleScript = null;
+                ballScript.connectedTo = null;
+                canShoot = false;
+                ballSpeed = defBallSpeed;
+            }
+        }*/
 
         //Stops moving the ball if it doesn't exist. USED TO PREVENT ERRORS
         if (ball != null)
@@ -125,13 +149,14 @@ public class GameManager : MonoBehaviour {
         //Continues the scrolling of paddles until the distance of 7.5 units has been scrolled and then stops all scrolling movement
         if (scrolling)
         {
-            if(ballScript.connectedTo.transform.position.y > -2.5)//if (m_distanceTraveled < 7.5f)
+            if (ballScript.connectedTo.transform.position.y > -2.5)//if (m_distanceTraveled < 7.5f)
             {
                 //Uses oldPosition in m_distanceTraveled to determine the amount of distance that has been traveled during the scrolling
                 //Vector3 oldPosition = ballScript.connectedTo.transform.position;
                 Scroll();
                 //m_distanceTraveled += Vector3.Distance(oldPosition, ballScript.connectedTo.transform.position);
-            }else
+            }
+            else
             {
                 scrolling = false;
                 //m_distanceTraveled = 0;
@@ -139,6 +164,37 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
+
+    /*private void FixedUpdate()
+    {
+        //Stops moving the ball if it doesn't exist. USED TO PREVENT ERRORS
+        if (ball != null)
+        {
+            //Only applies movement to the ball if the player has shot the ball
+            if (!canShoot)
+            {
+                ball.transform.Translate(Vector3.up * ballSpeed * Time.deltaTime);
+            }
+        }
+
+        //Continues the scrolling of paddles until the distance of 7.5 units has been scrolled and then stops all scrolling movement
+        if (scrolling)
+        {
+            if (ballScript.connectedTo.transform.position.y > -2.5)//if (m_distanceTraveled < 7.5f)
+            {
+                //Uses oldPosition in m_distanceTraveled to determine the amount of distance that has been traveled during the scrolling
+                //Vector3 oldPosition = ballScript.connectedTo.transform.position;
+                Scroll();
+                //m_distanceTraveled += Vector3.Distance(oldPosition, ballScript.connectedTo.transform.position);
+            }
+            else
+            {
+                scrolling = false;
+                //m_distanceTraveled = 0;
+                canShoot = true;
+            }
+        }
+    }*/
 
     public void CheckTouch(Vector2 pos)
     {
