@@ -22,6 +22,14 @@ public class ObjectSpawning : MonoBehaviour {
         powers[1] = power_EnlargePaddle;
     }
 
+    //Spawns a random powerup from the array of powerups
+    public void SpawnPower()
+    {
+        int selectedPower = Random.Range(0, powers.Length);
+        SpawnObj(powers[selectedPower]);
+    }
+
+    //Spawns the passed object in a random location within the spawning zone
     public void SpawnObj(GameObject objToSpawn)
     {
         Vector3 rndPosWithin;

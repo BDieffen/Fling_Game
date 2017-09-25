@@ -7,6 +7,6 @@ public class FrameRateLimiter : MonoBehaviour {
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 60;
     }
 }

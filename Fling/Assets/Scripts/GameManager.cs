@@ -43,6 +43,9 @@ public class GameManager : MonoBehaviour {
     public GameObject playAgainButton;
     public GameObject goToOptions;
 
+    ObjectSpawning objectSpawnerScript;
+    bool canSpawnPowers = false;
+
     void Start() {
         Resources.UnloadUnusedAssets();
         playAgainButton.SetActive(false);
@@ -70,6 +73,9 @@ public class GameManager : MonoBehaviour {
         {
             highScoreText.text = "High Score: " + highScore;
         }
+
+        objectSpawnerScript = GetComponent<ObjectSpawning>();
+        canSpawnPowers = false;
     }
 
     void Update() {
@@ -161,6 +167,7 @@ public class GameManager : MonoBehaviour {
                 scrolling = false;
                 //m_distanceTraveled = 0;
                 canShoot = true;
+                AfterScrolling();
             }
         }
     }
@@ -286,6 +293,25 @@ public class GameManager : MonoBehaviour {
     public void LoadOptions()
     {
         SceneManager.LoadScene("Options_Menu");
+    }
+
+    //Gets called every time the scrolling stops
+    public void AfterScrolling()
+    {
+        //Activates the spawning of powerups
+        if (!canSpawnPowers && score == 19)
+        {
+            canSpawnPowers = true;
+            objectSpawnerScript.SpawnPower();
+        }
+        if (canSpawnPowers)
+        {
+            if((score + 1) % 10 == 0)
+            {
+                objectSpawnerScript.SpawnPower();
+            }
+        }
+
     }
 
     //Triggers when the player gets a new high score. Saves the high score into a file which can be retreived later
