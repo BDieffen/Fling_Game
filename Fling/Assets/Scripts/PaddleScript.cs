@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PaddleScript : MonoBehaviour {
 
+    public float enlargeScale = 4.3f;
     public float speed = 0f;
     public float currentMinSpeed = 1;
     public float currentMaxSpeed = 1.5f;

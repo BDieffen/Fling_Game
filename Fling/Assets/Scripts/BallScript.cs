@@ -71,6 +71,23 @@ public class BallScript : MonoBehaviour {
             gameManager.ApplyScore();
             transform.position = new Vector3(transform.position.x, connectedTo.transform.position.y + .2f, transform.position.z);
             firstShot = false;
+            CalculateNextPaddle();
+        }
+    }
+
+    void CalculateNextPaddle()
+    {
+        switch (connectedTo.gameObject.name)
+        {
+            case "Paddle1":
+                gameManager.nextPaddle = GameObject.Find("Paddle2");
+                break;
+            case "Paddle2":
+                gameManager.nextPaddle = GameObject.Find("Paddle3");
+                break;
+            case "Paddle3":
+                gameManager.nextPaddle = GameObject.Find("Paddle1");
+                break;
         }
     }
 }

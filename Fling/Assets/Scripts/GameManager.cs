@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour {
 
     GameObject[] paddles = new GameObject[3];
     PaddleScript[] pScripts = new PaddleScript[3];
+    public GameObject nextPaddle;
     GameObject ball;
     BallScript ballScript;
 
@@ -214,6 +215,10 @@ public class GameManager : MonoBehaviour {
             if (hit.transform.gameObject.name == "GoToOptions")
             {
                 LoadOptions();
+            }
+            if (hit.transform.gameObject.name == "CurrentPowerUp")
+            {
+                gameObject.GetComponent<PowerHodling>().ActivatePower();
             }
         }
         else
