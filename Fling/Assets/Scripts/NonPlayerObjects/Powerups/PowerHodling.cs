@@ -16,7 +16,7 @@ public class PowerHodling : MonoBehaviour {
         isPowerAvailable = false;
 
         gameManagerScript = gameObject.GetComponent<GameManager>();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -43,7 +43,9 @@ public class PowerHodling : MonoBehaviour {
     void EnlargePaddles()
     {
         PaddleScript paddleToEdit = gameManagerScript.nextPaddle.GetComponent<PaddleScript>();
-        //paddleToEdit.transform.Translate(paddleToEdit.enlargeScale * Time.deltaTime * 2, 0, 0);
+        //paddleToEdit.transform.Translate(paddleToEdit.enlargeSize * Time.deltaTime, 0, 0);
+        //paddleToEdit.transform.localScale = new Vector3(paddleToEdit.enlargeSize, paddleToEdit.transform.localScale.y, paddleToEdit.transform.localScale.z);
+        paddleToEdit.transform.localScale = new Vector3(0, 0, 0);
 
     }
     void ExtraBall()

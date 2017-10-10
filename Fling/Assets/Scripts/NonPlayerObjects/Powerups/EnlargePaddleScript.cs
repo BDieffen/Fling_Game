@@ -36,14 +36,14 @@ public class EnlargePaddleScript : MonoBehaviour {
     {
         powerManager.currentPower = 0;
         powerManager.isPowerAvailable = true;
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.name == "ball")
+        if(other.gameObject.name == "Ball")
         {
             ApplyPower();
-            Destroy(gameObject);
         }
     }
 }

@@ -11,6 +11,7 @@ public class BallScript : MonoBehaviour {
 
 	void Start () {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager.nextPaddle = GameObject.Find("Paddle2");
     }
 	
 	void Update () {

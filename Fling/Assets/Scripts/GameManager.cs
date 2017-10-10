@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour {
     public GameObject nextPaddle;
     GameObject ball;
     BallScript ballScript;
+    PowerHodling powerupManager;
 
     public float ballSpeed = 0;
     float defBallSpeed = 9;
@@ -67,6 +68,7 @@ public class GameManager : MonoBehaviour {
         pScripts[2] = paddles[2].GetComponent<PaddleScript>();
 
         goToOptions = GameObject.Find("GoToOptions");
+        powerupManager = gameObject.GetComponent<PowerHodling>();
 
         canShoot = true;
         //Displays the high score if one exists
@@ -218,7 +220,7 @@ public class GameManager : MonoBehaviour {
             }
             if (hit.transform.gameObject.name == "CurrentPowerUp")
             {
-                gameObject.GetComponent<PowerHodling>().ActivatePower();
+                powerupManager.ActivatePower();
             }
         }
         else
