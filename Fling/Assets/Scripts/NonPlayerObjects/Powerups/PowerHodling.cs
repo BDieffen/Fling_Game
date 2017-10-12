@@ -7,6 +7,10 @@ public class PowerHodling : MonoBehaviour {
     public int currentPower;
     public bool isPowerAvailable;
 
+    public bool wasEnlarged = false;
+    float enlargedOriginalSize;
+
+    PaddleScript paddleToEdit;
     GameManager gameManagerScript;
 
 	// Use this for initialization
@@ -30,7 +34,10 @@ public class PowerHodling : MonoBehaviour {
             switch (currentPower)
             {
                 case 0:
-                    EnlargePaddles();
+                    //EnlargePaddles();
+                    paddleToEdit = gameManagerScript.nextPaddle.GetComponent<PaddleScript>();
+                    enlargedOriginalSize = paddleToEdit.currentSize;
+                    StartCoroutine(EnlargePaddles());
                     break;
                 case 1:
                     ExtraBall();
@@ -40,13 +47,25 @@ public class PowerHodling : MonoBehaviour {
         }
     }
 
-    void EnlargePaddles()
+    /*void EnlargePaddles()
     {
         PaddleScript paddleToEdit = gameManagerScript.nextPaddle.GetComponent<PaddleScript>();
-        //paddleToEdit.transform.Translate(paddleToEdit.enlargeSize * Time.deltaTime, 0, 0);
+        enlargedOriginalSize = paddleToEdit.currentSize;
+        //paddleToEdit.transform.Translate(paddleToEdit.enlargeSize * Time.deltaTime *3, 0, 0);
+        paddleToEdit.transform.localScale = new Vector3(paddleToEdit.enlargeSize, paddleToEdit.transform.localScale.y, paddleToEdit.transform.localScale.z);
+        wasEnlarged = true;
+    }*/
+    IEnumerator EnlargePaddles()
+    {
+        //PaddleScript paddleToEdit = gameManagerScript.nextPaddle.GetComponent<PaddleScript>();
+        //enlargedOriginalSize = paddleToEdit.currentSize;
         //paddleToEdit.transform.localScale = new Vector3(paddleToEdit.enlargeSize, paddleToEdit.transform.localScale.y, paddleToEdit.transform.localScale.z);
-        paddleToEdit.transform.localScale = new Vector3(0, 0, 0);
-
+        while (paddleToEdit.transform.localScale.x < paddleToEdit.enlargeSize)
+        {
+            paddleToEdit.transform.localScale += new Vector3(1, 0, 0) * Time.deltaTime;
+        }
+        wasEnlarged = true;
+        yield return null;
     }
     void ExtraBall()
     {

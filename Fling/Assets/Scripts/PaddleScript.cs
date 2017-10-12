@@ -12,7 +12,7 @@ public class PaddleScript : MonoBehaviour {
     public float currentMinSize = 1.8f;
     //float maxSize = 2.5f;
     public float currentMaxSize = 2.5f;
-    float currentSize = 2.5f;
+    public float currentSize = 2.5f;
     public Vector3 direction;
     public GameObject teleExit;
     GameManager gameScript;

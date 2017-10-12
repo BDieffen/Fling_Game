@@ -106,6 +106,16 @@ public class GameManager : MonoBehaviour {
             GameOver();
         }
 
+        //FOR DEBUGGING AND TESTING ON PC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!REMOVE LATER
+        if (Input.GetMouseButtonDown(0) && !scrolling)
+        {
+            ShootBall();
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            powerupManager.ActivatePower();
+        }
+
         //Number of touches detected each frame
         int nbTouches = Input.touchCount;
 
@@ -228,12 +238,17 @@ public class GameManager : MonoBehaviour {
             //When the screen is touched and the ball can be shot and the paddles are done scrolling, shoots the ball upward
             if (!scrolling && canShoot)
             {
-                ballScript.connectedPaddleScript = null;
-                ballScript.connectedTo = null;
-                canShoot = false;
-                ballSpeed = defBallSpeed;
+                ShootBall();
             }
         }
+    }
+
+    void ShootBall()
+    {
+        ballScript.connectedPaddleScript = null;
+        ballScript.connectedTo = null;
+        canShoot = false;
+        ballSpeed = defBallSpeed;
     }
 
     void TouchEnd(Vector2 pos)

@@ -7,11 +7,13 @@ public class BallScript : MonoBehaviour {
     GameManager gameManager;
     public GameObject connectedTo;
     public PaddleScript connectedPaddleScript;
+    public PowerHodling powerupManager;
     bool firstShot = true;
 
 	void Start () {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         gameManager.nextPaddle = GameObject.Find("Paddle2");
+        powerupManager = GameObject.Find("GameManager").GetComponent<PowerHodling>();
     }
 	
 	void Update () {
@@ -73,6 +75,10 @@ public class BallScript : MonoBehaviour {
             transform.position = new Vector3(transform.position.x, connectedTo.transform.position.y + .2f, transform.position.z);
             firstShot = false;
             CalculateNextPaddle();
+            if (powerupManager.wasEnlarged)
+            {
+                connectedTo.transform.localScale = new Vector3(connectedPaddleScript.currentSize, connectedTo.transform.localScale.y, connectedTo.transform.localScale.z);
+            }
         }
     }
 

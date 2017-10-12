@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 23216731272331522}
   - component: {fileID: 114122318161469522}
   - component: {fileID: 54238288374680660}
+  - component: {fileID: 114950020868818386}
   m_Layer: 0
   m_Name: LargerPaddlePower
   m_TagString: PowerUp
@@ -104,9 +105,20 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1024900559162310}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45849abe22334ec40ae546b293620d1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114950020868818386
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1024900559162310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 293328eb38b39e947b46226ceb60fd56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!136 &136377388310972140
