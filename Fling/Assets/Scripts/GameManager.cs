@@ -228,7 +228,7 @@ public class GameManager : MonoBehaviour {
             {
                 LoadOptions();
             }
-            if (hit.transform.gameObject.name == "CurrentPowerUp")
+            if (canShoot && hit.transform.gameObject.name == "CurrentPowerUp")
             {
                 powerupManager.ActivatePower();
             }
@@ -321,7 +321,7 @@ public class GameManager : MonoBehaviour {
     public void AfterScrolling()
     {
         //Activates the spawning of powerups
-        if (!canSpawnPowers && score == 19)
+        if (!canSpawnPowers && score == 14)
         {
             canSpawnPowers = true;
             objectSpawnerScript.SpawnPower();

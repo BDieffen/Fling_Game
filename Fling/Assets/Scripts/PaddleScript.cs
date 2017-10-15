@@ -91,11 +91,11 @@ public class PaddleScript : MonoBehaviour {
         if(tier % 15 == 0)
         {
             currentMinSpeed++;
-            currentMinSize--;
+            currentMinSize -= .5f;
         }
         if(tier % 20 == 0)
         {
-            currentMaxSize -= 1f;
+            currentMaxSize -= .5f;
         }
     }
 }

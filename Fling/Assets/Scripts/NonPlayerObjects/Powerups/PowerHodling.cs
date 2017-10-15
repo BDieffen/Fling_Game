@@ -13,8 +13,11 @@ public class PowerHodling : MonoBehaviour {
     PaddleScript paddleToEdit;
     GameManager gameManagerScript;
 
-	// Use this for initialization
-	void Start () {
+    float growthSpeed = 1;
+    Vector3 growthScale;
+
+    // Use this for initialization
+    void Start () {
         availablePowers[0] = 0;
         availablePowers[1] = 1;
         isPowerAvailable = false;
@@ -34,7 +37,6 @@ public class PowerHodling : MonoBehaviour {
             switch (currentPower)
             {
                 case 0:
-                    //EnlargePaddles();
                     paddleToEdit = gameManagerScript.nextPaddle.GetComponent<PaddleScript>();
                     enlargedOriginalSize = paddleToEdit.currentSize;
                     StartCoroutine(EnlargePaddles());
@@ -47,26 +49,33 @@ public class PowerHodling : MonoBehaviour {
         }
     }
 
-    /*void EnlargePaddles()
-    {
-        PaddleScript paddleToEdit = gameManagerScript.nextPaddle.GetComponent<PaddleScript>();
-        enlargedOriginalSize = paddleToEdit.currentSize;
-        //paddleToEdit.transform.Translate(paddleToEdit.enlargeSize * Time.deltaTime *3, 0, 0);
-        paddleToEdit.transform.localScale = new Vector3(paddleToEdit.enlargeSize, paddleToEdit.transform.localScale.y, paddleToEdit.transform.localScale.z);
-        wasEnlarged = true;
-    }*/
+    //When the Enlarge paddle powerup is used, this coroutine smoothly scales up the paddle
     IEnumerator EnlargePaddles()
     {
-        //PaddleScript paddleToEdit = gameManagerScript.nextPaddle.GetComponent<PaddleScript>();
-        //enlargedOriginalSize = paddleToEdit.currentSize;
-        //paddleToEdit.transform.localScale = new Vector3(paddleToEdit.enlargeSize, paddleToEdit.transform.localScale.y, paddleToEdit.transform.localScale.z);
-        while (paddleToEdit.transform.localScale.x < paddleToEdit.enlargeSize)
+        growthScale = new Vector3(paddleToEdit.enlargeSize, paddleToEdit.transform.localScale.y, paddleToEdit.transform.localScale.z);
+
+        for (float i=0; i<1; i += Time.deltaTime / growthSpeed)
         {
-            paddleToEdit.transform.localScale += new Vector3(1, 0, 0) * Time.deltaTime;
+            paddleToEdit.transform.localScale = Vector3.Lerp(paddleToEdit.transform.localScale, growthScale, i);
+            yield return null;
         }
         wasEnlarged = true;
-        yield return null;
     }
+
+    //When the ball connects with the enlarged paddle, this coroutine smoothly scales the paddle back down
+    public IEnumerator ShrinkPaddles(GameObject paddle)
+    {
+        PaddleScript paddleScript = paddle.GetComponent<PaddleScript>();
+        growthScale = new Vector3(paddleScript.currentSize, paddle.transform.localScale.y, paddle.transform.localScale.z);
+
+        for (float i = 0; i < 1; i += Time.deltaTime / growthSpeed)
+        {
+            paddle.transform.localScale = Vector3.Lerp(paddle.transform.localScale, growthScale, i);
+            yield return null;
+        }
+        wasEnlarged = false;
+    }
+
     void ExtraBall()
     {
 

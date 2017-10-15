@@ -77,7 +77,8 @@ public class BallScript : MonoBehaviour {
             CalculateNextPaddle();
             if (powerupManager.wasEnlarged)
             {
-                connectedTo.transform.localScale = new Vector3(connectedPaddleScript.currentSize, connectedTo.transform.localScale.y, connectedTo.transform.localScale.z);
+                //connectedTo.transform.localScale = new Vector3(connectedPaddleScript.currentSize, connectedTo.transform.localScale.y, connectedTo.transform.localScale.z);
+                StartCoroutine(powerupManager.ShrinkPaddles(connectedTo));
             }
         }
     }
