@@ -33,7 +33,8 @@ public class ObjectSpawning : MonoBehaviour {
     public void SpawnObj(GameObject objToSpawn)
     {
         Vector3 rndPosWithin;
-        rndPosWithin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        //rndPosWithin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        rndPosWithin = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), -.03f);
         rndPosWithin = spawnZone.transform.TransformPoint(rndPosWithin * .5f);
         GameObject obj = Instantiate(objToSpawn, rndPosWithin, objToSpawn.transform.rotation);
         //If the object to be spawned is an obstacle, this puts it as a child to the "Obstacles" game object

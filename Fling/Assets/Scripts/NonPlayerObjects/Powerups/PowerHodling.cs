@@ -80,4 +80,16 @@ public class PowerHodling : MonoBehaviour {
     {
 
     }
+
+    void TriShot()
+    {
+
+    }
+
+    //When this powerup is enabled, there is a projection (or indicator) of where the ball will land and when to shoot it 
+    //so it lands as close to the center of the paddle as possible.
+    void Projection()
+    {
+
+    }
 }

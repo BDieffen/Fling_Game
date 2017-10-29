@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour {
         {
             ShootBall();
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && canShoot)
         {
             powerupManager.ActivatePower();
         }
@@ -120,16 +120,16 @@ public class GameManager : MonoBehaviour {
         int nbTouches = Input.touchCount;
 
         //Do something if there is at least 1 touch detected
-        if (nbTouches > 0 && !scrolling)
+        if (nbTouches == 1 && !scrolling)
         {
             if (Input.GetTouch(0).phase == TouchPhase.Began)
             {
                 CheckTouch(Input.GetTouch(0).position);
             }
-            if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            /*if (Input.GetTouch(0).phase == TouchPhase.Ended)
             {
                 TouchEnd(Input.GetTouch(0).position);
-            }
+            }*/
 
 
 
@@ -228,7 +228,7 @@ public class GameManager : MonoBehaviour {
             {
                 LoadOptions();
             }
-            if (canShoot && hit.transform.gameObject.name == "CurrentPowerUp")
+            if (hit.transform.gameObject.name == "CurrentPowerUp")
             {
                 powerupManager.ActivatePower();
             }
@@ -243,15 +243,7 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void ShootBall()
-    {
-        ballScript.connectedPaddleScript = null;
-        ballScript.connectedTo = null;
-        canShoot = false;
-        ballSpeed = defBallSpeed;
-    }
-
-    void TouchEnd(Vector2 pos)
+    /*void TouchEnd(Vector2 pos)
     {
         Vector3 wp = Camera.main.ScreenToWorldPoint(pos);
         Vector2 touchPos = new Vector2(wp.x, wp.y);
@@ -261,6 +253,14 @@ public class GameManager : MonoBehaviour {
         {
             LoadOptions();
         }
+    }*/
+
+    void ShootBall()
+    {
+        ballScript.connectedPaddleScript = null;
+        ballScript.connectedTo = null;
+        canShoot = false;
+        ballSpeed = defBallSpeed;
     }
 
     //Handles the scrolling of the ball and paddles
